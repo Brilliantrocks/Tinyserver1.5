@@ -1,15 +1,15 @@
 # eventloop分析
  
-##1 epoll_wait()获取活动事件
+## 1 epoll_wait()获取活动事件
 * 阻塞等待事件发生（`epoll_wait()`timeout参数-1）
 * 获取当前活动事件数目number
 * 如果报错退出eventloop
 
-##2 遍历有活动的events事件表
+## 2 遍历有活动的events事件表
 ### 2.1 listenfd事件：dealclinetdata()
 1. 创建 sockaddr_in 类型的客户端地址 client_address 和 地址长度client_addrlength
 2. 选择触发模式
-####2.1.1LT水平触发：
+#### 2.1.1LT水平触发：
 
 * 调用`accept()`从监听套接字获得创建连接fd connfd ，地址，地址长度存放于client_address，地址长度client_addrlength
 * 创建connfd失败则写连接错误日志并返回false
@@ -31,7 +31,7 @@
   
 * 参考：http://blog.chinaunix.net/uid-28541347-id-4308612.html
   
-###2.2对于connfd的挂起/错误处理
+### 2.2对于connfd的挂起/错误处理
 * 该connfd的events成员EPOLLRDHUP | EPOLLHUP | EPOLLERR标志位置一
 * 获取当前客户端数据client_data users_timer的成员计时器
 * 用connfd 和计时器timer调用`del_timer()`处理
@@ -41,7 +41,7 @@
 
 * 总结：关闭失效的http连接，删除事件表注册事件和计时器
   
-###2.3处理管道上的信号
+### 2.3处理管道上的信号
 * 当sockfd为管道0端，且有数据可读EPOLLIN
 * 调用`dealwithsignal()`处理，传入timeout ,stop_server参数记录信号指令
  * 内部调用`recv(）`从管道0端读取信号信息到signals,并遍历检查
@@ -50,14 +50,14 @@
   
 * 总结：做了对中止和超时信号的处理
   
-###2.4connfd读事件处理
+### 2.4connfd读事件处理
 * 用connfd调用`dealwithread()`
 * 获取当前connfd的计时器timer
-####2.4.1 reactor反应模式
+#### 2.4.1 reactor反应模式
 * 计时器未失效则调用调整函数`adjust_timer`：计时器后延15s，工具类调用顺序计时器链表调整函数，写计时器调整日志
 * http连接数组users指针地址加上connfd获得请求id，用0传参调用http连接池的`append（）`将请求加入工作队列
 * 根据http连接类的成员标志位improv和timer_flag循环调用`webserver::deal_timer()`处理客户端计时器直到超时（删除计时器）或者完成
-####2.4.2 proactor反应模式
+#### 2.4.2 proactor反应模式
 * 调用http连接的`read_once()`读取一次
 * 如果读取成功则
  * 写处理日志
@@ -66,7 +66,7 @@
 * 读取失败
  * 调用`deal_timer()`处理失效套接字
   
-###2.5connfd写事件处理
+### 2.5connfd写事件处理
 * 用connfd调用`dealwithwrite()`
 * 获取该套接字计时器timer
 #### reactor反应模式
@@ -81,7 +81,7 @@
 * 写入失败
  * 调用`deal_timer()`处理失效套接字
 
-##3 超时检查
+## 3 超时检查
 * 检查timeout标志位
 * 若存在超时事件则工具类调用计时器处理函数`utils.timer_handler()`
  * 内部调用顺序计时器链表的tick函数`m_timer_lst.tick()`，处理计时器链表
