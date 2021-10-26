@@ -21,13 +21,13 @@
 
 细节详解
 -----
-* [服务器运行流程](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/myserver__sketch.md)  
-* [Proactor/Reactor并发模式](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/proactor&reactor.md)
-* [epoll实现的IO多路复用](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/epoll.md)
-* [深入eventloop事件循环](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
-* [http连接类](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
-* [httpconn池化](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
-* [mysql连接池](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
-* [同步日志与阻塞队列异步日志](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
-* [最小堆计时器](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
+* [服务器运行流程](https://github.com/Brilliantrocks/Tinyserver1.5/blob/main/myserver__sketch.md)  
+* [Proactor/Reactor并发模式](https://github.com/Brilliantrocks/Tinyserver1.5/blob/main/proactor&reactor.md)
+* [epoll实现的IO多路复用](https://github.com/Brilliantrocks/Tinyserver1.5/blob/main/epoll.md)
+* [深入eventloop事件循环](https://github.com/Brilliantrocks/Tinyserver1.5/blob/main/.md)
+* [http连接类](https://github.com/Brilliantrocks/Tinyserver1.5/blob/main/.md)
+* [httpconn池化](https://github.com/Brilliantrocks/Tinyserver1.5/blob/main/.md)
+* [mysql连接池](https://github.com/Brilliantrocks/Tinyserver1.5/blob/main/.md)
+* [同步日志与阻塞队列异步日志](https://github.com/Brilliantrocks/Tinyserver1.5/blob/main/.md)
+* [最小堆计时器](https://github.com/Brilliantrocks/Tinyserver1.5/blob/main/.md)
 
