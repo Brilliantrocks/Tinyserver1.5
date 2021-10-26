@@ -9,9 +9,9 @@
   
 * `int epoll_ctl(int epfd,int op,int fd,struct epoll_event*event)`操作内核事件表
 * fd参数是要操作的文件描述符，op参数则指定操作类型。操作类型有如下3种：
- 1. EPOLL_CTL_ADD，往事件表中注册fd上的事件
- 2. EPOLL_CTL_MOD，修改fd上的注册事件
- 3. EPOLL_CTL_DEL，删除fd上的注册事件
+	 1. EPOLL_CTL_ADD，往事件表中注册fd上的事件
+	 2. EPOLL_CTL_MOD，修改fd上的注册事件
+	 3. EPOLL_CTL_DEL，删除fd上的注册事件
 
 * event参数指定事件，它是epoll_event结构指针类型。epoll_event的定义如下：
 ```
@@ -63,9 +63,9 @@ typedef union epoll_data
 * epoll系列系统调用的主要接口是epoll_wait函数。它在一段超时时间内等待一组文件描述符上的事件， 其原型如下
 `int epoll_wait(int epfd,struct epoll_event*events,int maxevents,int timeout);`
 * timeout参数同poll接口的timeout参数  
- * 成功时返回就绪的文件描述符的个数，失败时返回-1并设置errno
- * timeout参数指定epoll的超时值，单位是毫秒
- * 当timeout为-1时，epoll调用将永远阻塞，直到某个事件发生；当timeout为0时，poll调用将立即返回
+	 * 成功时返回就绪的文件描述符的个数，失败时返回-1并设置errno
+	 * timeout参数指定epoll的超时值，单位是毫秒
+	 * 当timeout为-1时，epoll调用将永远阻塞，直到某个事件发生；当timeout为0时，poll调用将立即返回
 * maxevents 参数指定最多监听多少个事件，它必须大于0
   
 * epoll_wait函数如果检测到事件，就将所有就绪的事件从内核事件表（由epfd参数指定）中复制到它的第二个参数events指向的数组中
