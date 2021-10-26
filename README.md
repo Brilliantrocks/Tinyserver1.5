@@ -28,6 +28,6 @@
 * [http连接类](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
 * [httpconn池化](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
 * [mysql连接池](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
-* [同步日志与阻塞队列异步日志]https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md()
+* [同步日志与阻塞队列异步日志](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
 * [最小堆计时器](https://github.com/Brilliantrocks/Tinyserver1.5/edit/main/.md)
 
