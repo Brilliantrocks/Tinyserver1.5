@@ -22,8 +22,8 @@ void *threadpool<T>::worker(void *arg)
 * 阻塞等待在请求队列信号上`m_queuestat.wait()`抢占任务
 * 一个线程获得任务后，首先对请求队列加锁操作，尝试从队列获取工作，之后解锁
 * 获取工作后根据并发模式处理工作
- * Proactor：获取数据库实例，执行`http_conn`类的`process()`
- * Reactor:根据请求类型进行I/O操作，执行后更新`improv`标记连接已经I/O读写过，读取成功后获取数据库连接实例，执行`http_conn`类的`process()`，失败时设置超时标记位`tiemr_flag`
+     * Proactor：获取数据库实例，执行`http_conn`类的`process()`
+     * Reactor:根据请求类型进行I/O操作，执行后更新`improv`标记连接已经I/O读写过，读取成功后获取数据库连接实例，执行`http_conn`类的`process()`，失败时设置超时标记位`tiemr_flag`
 * `process()`详见http连接类；
 * 而`process()`过程中可能会调用`close_conn()`，其内部操作了静态成员变量`m_user_count`，++操作非原子性，
 * 多线程下可能造成竞态，是线程不安全的
