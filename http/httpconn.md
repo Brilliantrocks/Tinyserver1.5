@@ -1,8 +1,7 @@
-
   
-#http连接类
+# http连接类
 * 负责处理用于http应用的connfd，读取web请求，分析请求报文，连接数据库，逻辑处理请求，写回复报文
-##状态参数设置
+## 状态参数设置
 * 设置枚举变量
   
 * 请求方法METHOD
@@ -32,8 +31,8 @@
  * LINE_OK
  * LINE_BAD
  * LINE_OPEN
-##http类工作流程
-###初始化init()
+## http类工作流程
+### 初始化init()
 `void init(int sockfd, const sockaddr_in &addr, char *, int, int, string user, string passwd, string sqlname);`  
 
 * 设置类内成员
@@ -58,8 +57,8 @@
  * 完成标志位置零
  * 清空读写缓冲区和服务器本地文件
   
-###I/O操作
-####read_once()读取一次
+### I/O操作
+#### read_once()读取一次
 * 循环读取客户端数据，直到无数据可读或对方关闭连接
 * 非阻塞ET工作模式下，需要一次性将数据读完
 
@@ -71,7 +70,7 @@
  * 循环调用`recv()`从connfd读取数据
  * 直到无数据可读，返回-1且错误码为`errno == EAGAIN || errno == EWOULDBLOCK`时正常退出
  * 每次内循环更新可读标记
-####write()写入
+#### write()写入
 * 检查待发送字节数，为0则修改套接字内核事件注册表为EPOLLIN等待下次可读,初始化该套接字上的连接，返回`true`
 * 否则表示有数据需要写回，循环向套接字写数据：
  * 调用`writev()`向套接字集中写iovec数组的内容
@@ -79,7 +78,7 @@
  * 根据写回字节数更新已发字节数和待发字节数
  * 根据已发字节数和待发字节数更新iovec向量信息
  * 如果待发字节数小于等于0，表示发送完毕，调用`unmap()`解除指定文件映射，修改套接字内核事件表为EPOLLIN等待下次可读，如果设置了保持连接标志位则调用`init()`无参版本初始化http连接，返回`true`；否则返回`false`
-####readv函数和writev函数
+#### readv函数和writev函数
 * readv将数据从文件描述符读到分散的内存，分散读
 * writev将多内存地址上的数据写入到文件描述符，集中写
   
@@ -99,9 +98,9 @@ ssize_t writev(int fd,const struct iovec*vector,int count);
 * 通过集中写同一将写缓冲区里的回复报文信息和请求的目标文件映射写入到http_conn套接字
   
 
-###请求处理流程Process()
+### 请求处理流程Process()
 * 工作线程通过线程池类成员函数`run()`调用本函数
-####process_read()读取请求
+#### process_read()读取请求
 * 初始化行状态局部变量为`LINE_OK`
 * 初始化http状态码局部变量为`NO_REQUEST`
 * 初始化文本`text`
@@ -163,7 +162,7 @@ ssize_t writev(int fd,const struct iovec*vector,int count);
  * 当返回`NO_REQUEST`无请求，修改套接字在内核事件表中注册的事件为EPOLLIN等待下次可读
  * 其他返回值表示有数据需要处理，用返回值调用`process_write()`
   
-####process_write()写回请求
+#### process_write()写回请求
 * 传入读取处理后设置的http状态码为参数，根据参数做出相应处理
 * `INTERNAL_ERROR`：服务器内部错误
  * 调用`add_status_line()`写500错误状态行，其内部调用`add_response()`通过`vsnprintf()`将信息写入写缓冲区，并更新写出标记
