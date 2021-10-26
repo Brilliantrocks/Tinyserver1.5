@@ -106,14 +106,14 @@
  * 子线程调用http连接类的`worker()`函数，传入线程池指针
  * 子线程调用线程池的`run()`函数
   
-####线程池run()工作流程
-#####1多线程抢占任务
+#### 线程池run()工作流程
+##### 1多线程抢占任务
 * 各个工作线程阻塞循环等待工作，调用`m_queuestat.wait()`，内部使用信号量多线程抢占任务
 * 一个线程获取工作后，调用`m_queuelocker.lock()`上锁，内部使用mutex互斥锁
  * 如果工作队列为空，则直接解锁，进入下一轮阻塞等待
 * 从工作队列获取请求`m_workqueue.front()`，完成后解锁`m_queuelocker.unlock()`
-#####2.1 Reactor模式
-######请求状态m_state为0：读取
+##### 2.1 Reactor模式
+###### 请求状态m_state为0：读取
 * 调用http的`read_once()`读取一次
 * 读取成功
  * 将请求http的improv标志位置一
@@ -122,7 +122,7 @@
 * 读取失败
  * improv标志位置一
  * timer_flag标志位置一  
-#######请求状态m_state为1：写入
+###### 请求状态m_state为1：写入
 * 写入成功
  * improv标志位置一
 * 写入失败
@@ -130,7 +130,7 @@
  * timer_flag标志位置一
   
 * 总结：由子线程完成事务处理I/O操作  
-#####2.2 Proactor模式
+##### 2.2 Proactor模式
 * 为http请求分配数据库连接池
 * 调用http请求的`process`
 
